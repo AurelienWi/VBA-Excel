@@ -1,0 +1,48 @@
+VBA = Visual Basic Application
+C'est pourquoi on trouve le VBA pour Word, Excel, PowerPoint ou encore Access
+
+C'est un languauge orienté Objet
+
+  On utilise des objets de programmations qui désignent par exemple des celules dans un classeur Excel ou des lignes ou des colonnes auxuqelles sont associées des propriétés et   des méthodes
+    *Propriétés : Permettent de personnaliser les objets 
+      _Par exemple : Pour un cellule on peut, avec ces propriétés, personnaliser le couleur d'une cellule ainsi que la couleur et/ou la taille du texte, etc.
+    *Méthode : Permettent de réaliser des actions 
+      _Par exmple ; Insérer des lignes, des cellules, etc.
+      
+I - Créer une Macro 
+
+!! Nommer toujours sans accent et sans espace !!
+
+Une fois la Macro Nommée et Enregistrée, Excel va enregistré chaque action opérée sur la cellule et le transcrire en code VBA.
+
+
+II - Code VBA 
+
+Le code, contenant la retranscription faite par Excel en VBA de nos actions, est comprise dans le fichier "Modules".
+Ainsi, le code VBA est le suivant : 
+
+********
+Sub MiseEnForme1()
+
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 65535
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    With Selection.Font
+        .Color = -16776961
+        .TintAndShade = 0
+    End With
+    Selection.Font.Bold = True
+End Sub
+*********
+
+- Un code WBA est toujours écrit entre les bornes 'Sub' & 'End Sub'
+- Un bloque 'With/End With' permet de regrouper un objet et une proprité afin de lister toutes les propriétés dérivées qui s'en suivent et ainsi éviter les répétitions
+    Ainsi, pour le premier bloque, cela permet d'éviter de répéter Selection.Interior pour chaqune des 5 instructions qui suivent.
+- 'Selection' est un objet. Comme son nom l'indique, il désigne la sélection active au moment d'exécuter la Macro, càd, la ou les cellules concernées 
+    Ensuite, à chaque objet est associé une propriété 
+      Par exemple, ici les proprités sont 'Interior' pour les instructions faites sur l'intérieur de la cellules, et 'Font' pour les instructions concernant le texte contenu$
+      dans la cellule.
