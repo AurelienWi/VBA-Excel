@@ -1,0 +1,51 @@
+On s'intéresse ici à deux boîtes de dialogue:
+  _MsgBox
+  _InputBox
+  
+I - MsgBox
+
+Imaginous que l'on souhaite créer une boîte de dialogue demandant à l'utilisateur si il souhaite continuer, alors :
+
+  MsgBox("Souhaitez vous continuer ?")
+  
+Cela afficher le dialogue mais rien d'autre ne se passe.
+On souhaite alors rajouter des conditions.
+
+Le probleme est que pour faire ca, il faut d'abord créer un variable qui stockera la réponse, sans quoi Excel pas content
+
+!!! A noter que MsgBox retourne toujours un petit entier !!!
+
+On créer donc un variable de type Byte, cad qui peut prendre comme valeur un entier entre 1 & 255 (toujours dans cette problématique d'optimiser le Typage)
+  Puis l'on rajoute notre condition Yes/No
+    On rajoute également un titre à notre boîte de dialogue
+  
+      Dim retour As Byte 
+      MsgBox("Souhaitez vous continuer ?", vbYes/No, "Question"
+      
+Cependant, quelque que soit la réponse choisie, le code s'arrête car nous ne traitons pas cette réponse
+
+Pour la traiter, il faut déjà savoir ce qui est retourner
+  Pour cela, on utilise MsgBox sur notre variable pour voir ce que le programme nous retourne
+    
+    MsgBox(retour")
+
+On comprend que en cas de "Yes" VBA retourne un 6. Et en cas de "No" un 7
+  Autrement dit, si la valeur est 6 le code doit continuer et si la valeur est 7 le code doit s'arrêter
+  
+Pour traiter ce retour, nous utilision alors la fonction "If" et son complément "Then"
+  !!! Penser à fermer les bornes de l'instruction "If" avec une dernière ligne "Exit If"
+
+    If (retour=7) Then
+      Exit Sub
+    Exit If
+    
+
+II - InputBox
+
+InputBox permet de donnée la possibilité à l'utilisateur de répondre à une question en saissant quelque chose
+
+Qui dit valeur saisit, dit que l'on soit stocker cette valeur 
+  Par exemple:
+  
+    Dim Age as Byte
+    Age = InputBox("Quel est votre âge ?")
