@@ -1,0 +1,147 @@
+Les variables permettent de stocker des valeurs pour des traitements ultérieurs.
+Elles sont présentes dans l'écrasante majorité des procédures de code.
+
+
+I - Calculer le coût en gas d'un trajet effectué en véhicule 
+
+ 
+Pour comencer à coder, il nous faut toujours un modul. 
+ => Insertion - Module 
+ 
+Dans ce module, il faut que notre code soit compris entre des bornes "Sub" & "End Sub"
+
+
+    A) La fonction "MsgBox"
+
+Un seul argument obligatoire : "Prompt", càd le message, le nom. 
+Il permet d'ouvrir une boîte de dialogue sur l'interface Excel.
+Il s'agit simplement indiquer au futur l'utilisateur de cette macro, quelle est sa fonction en la nommant de façon appropriée
+  
+MsgBox("Calcul du coût en essence du trajet en voiture")
+
+
+    B) Créer une variable _ Les grandes notions
+
+Nous souhaitons créer une variable dans laquelle sera stocké ce message contenue dans la fonction MsgBox
+
+
+        i) Déclarer une variable
+
+Pour commencer, il nous faut déclarer notre variable
+
+Pour Déclarer une variable en VBA, le mot clés est "Dim" pour dimension. 
+  Créer une variable du nom de 'Message':
+    
+    Dim Message
+
+Que nous suivons du terme clés "As" pour définir le Typage, dans notre cas, Texte. 
+  Le tout devient donc 
+  
+    Dim Message As string 
+
+    
+      ii) Affecter une variable
+      
+Après avoir été Déclarée, une variable doit être Affectée.
+  On doit lui attribuer une valeure, en l'occurence le texte de notre boîte de dialogue 
+
+Pour Affecter une variable, le terme clés est le sigle '='
+
+  Message = "Calcul du coût en essence du trajet en voiture"
+  
+Nous pouvons alors simplifier notre code et remplacer l'argument de notre fonction MgsBox par notre variable message 
+
+  MgsBox(Message)
+  
+  
+      iii) Une boîte de dialogue intéractive : InputBox
+      
+InputBox permet à l'utilisateur de saisir des données 
+
+Une nouvelle fois, un seul argument est obligatoire : 'Prompt'
+
+Mais contrairement à MgsBox qui ne fait qu'afficher,
+  InputBox permet de créer une saisie intéractive en demandant à l'utilisateur de rentrer des valeurs (ici consommation/km, distance du trajet, prix de l'essence / diesel)
+  
+    InputBox("Quelle est le prix au litre du carburant utilisé ?")
+
+Cependant, pour pouvoir utiliser la valeur saisie par l'utilisation, 
+  il faut la stocker dans une variable !
+  
+  
+  III - Créer un code 
+  
+    A) Définir les variables 
+    
+Nous avons besoins de 3 varaibles:
+  _Prix au litre du carburant
+  _Distance parcourue
+  
+
+        a. Stocker l'information saisie par l'utilisateur 
+        
+Pour cela il faut commencer par créer une variable, 
+ Variable à laquelle on associe ensuite le retour donné par l'InputBox
+  
+   Dim prix_litre As Single
+   prix_litre = InputBox("Quelle est le prix au litre du carburant utilisé ?")
+   
+    
+Il suffit alors de reproduire le processus pour les deux autres variables, ce qui donne au final 
+
+   
+   Dim prix_litre As Single
+   Dim consommation As Single  
+   Dim distance As Integer  
+   
+   prix_litre = InputBox("Quelle est le prix au litre du carburant utilisé ?")
+   consommation = InputBox("Quelle est la consommation par km du véhicule ?")
+   distance = InputBox("Quelle est ll distance parcourue ?")
+
+Il ne nous reste plus qu'à caculer la consomation tolale
+
+Mais, il faut commencer par créer un variable.
+  A noter que cette variable prendra comme valeur un réel avec sûrement un trs grand nombre de décimal, en raison de la division 
+    Ce n'est alors plus "Single" qu'il faut utiliser comme type MAIS "Double"
+    
+      Dim cout_trajet As Double
+    
+Variable dans laquelle nous enregistrons le résultat 
+
+    cout_trajet = distance * consommation * prix 
+
+On finit on affichant notre résultat
+
+    MsgBox(cout_trajet)
+    
+Sauf que notre résultat est assez laid dans son affichage, il serait utile de l'arrondir et d'afficher un message pour faciliter la compréhension
+
+Pour arroudir, il faut utiliser la fonction Round():
+  
+   MsgBox(round(cout_trajet, 2))
+   
+Pour associer un résultat numérique à du texte, il utiliser "&", les variable préalablement définit et le résultat final,
+
+  MsgBox("Votre trajet de " & distance & "Km vous coûtera " & round(cout_trajet, 2) & " euros")
+  
+  
+**************************************************************** Code *************************************************************************************************
+
+Sub calcul_cout_trajet()
+
+Dim distance As Integer
+Dim consommation As Single
+Dim prix_carburant As Single
+Dim cout_trajet As Double
+
+distance = InputBox("Quelle est la distance de votre trajet ?")
+consommation = InputBox("Quelle est la consommation de votre véhicule ?")
+prix = InputBox("Quelle est le prix au litre du carburant que vous utilisez ?")
+
+cout_trajet = distance * (consommation / 100) * prix
+
+MsgBox ("Votre trajet de " & distance & " Km représentera un coût de " & Round(cout_trajet, 2) & " euros")
+
+End Sub
+
+*************************************************************************************************************************************************************************
