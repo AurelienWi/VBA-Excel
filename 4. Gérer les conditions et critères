@@ -19,20 +19,60 @@ End Sub
 
 *********************************************************************************************************************************************************************************
 
-I - Prévoir les erreurs de l'utilisateurs 
 
-  A) Les incompatibilités de Type 
+    
+    
+*************************************************************** Code 2.0 ********************************************************************************************************
 
-Nous demandons à l'utilisateur de rentrer sa taille.
-  Si ce dernier rentre 1.80, le point transforme alors la valeure saisie en texte
-    Il faut prévoir cela 
-      Il faut faire des tests 
-        C'est alors que rentre en jeux les Conditions !  
-        
-        
-Pour cela, nous commençons par enregistrer la valeure saisie par l'utilisateur dans une variable 'intermédiaire' qui accepte (presque) tout type de saisie : String
-  String car cela peut contenir aussi bien un texte qu'un nombre réel, qu'un nombre entier
-  
-    Dim tampon As String
+
+Sub IMC()
+
+Dim taille As Single
+Dim poids As Integer
+Dim IMC As Single
+
+Dim tampon As String
+
+
+la_taille:
+tampon = InputBox("Quelle est votre taille en cm ?")
+If (IsNumeric(tampon)) Then
+    taille = tampon
+Else
+    MsgBox ("Vous devez saisir une valeur numérique. Ex : 1.80m devient 180")
+    GoTo la_taille
+End If
+
+
+le_poids:
+tampon = InputBox("Quelle est votre poids en kilos ?")
+If (IsNumeric(tampon)) Then
+    poids = tampon
+Else
+    MsgBox ("Vous devez saisir une valeur numérique")
+    GoTo le_poids
+End If
+
+IMC = poids / ((taille / 100) * (taille / 100))
+
+MsgBox ("Votre IMC est de " & Round(IMC, 2))
+
+If (IMC <= 25) Then
+    MsgBox ("Votre IMC est normal")
+ElseIf (IMC >= 30) Then
+    MsgBox ("Vous êtes obèse")
+Else
+    MsgBox ("Vous êtes en surpoids")
+End If
+
+
+Range("B8:U8") = ""
+Cells(8, IMC - 16) = Cells(4, 23)
+
+
+End Sub
+
+*********************************************************************************************************************************************************************************
+    
     
  
