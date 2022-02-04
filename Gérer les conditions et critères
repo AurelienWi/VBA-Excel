@@ -1,0 +1,38 @@
+Réalisation d'une application du calcul de l'IMC
+
+*********************************************************************** Code ****************************************************************************************************
+
+Sub IMC()
+
+Dim taille As Single
+Dim poids As Integer
+Dim IMC As Single
+
+taille = InputBox("Quelle est votre taille en cm ?")
+poids = InputBox("Quelle est votre poids en kilos ?")
+
+IMC = poids / ((taille / 100) * (taille / 100))
+
+MsgBox ("Votre IMC est de " & Round(IMC, 2))
+
+End Sub
+
+*********************************************************************************************************************************************************************************
+
+I - Prévoir les erreurs de l'utilisateurs 
+
+  A) Les incompatibilités de Type 
+
+Nous demandons à l'utilisateur de rentrer sa taille.
+  Si ce dernier rentre 1.80, le point transforme alors la valeure saisie en texte
+    Il faut prévoir cela 
+      Il faut faire des tests 
+        C'est alors que rentre en jeux les Conditions !  
+        
+        
+Pour cela, nous commençons par enregistrer la valeure saisie par l'utilisateur dans une variable 'intermédiaire' qui accepte (presque) tout type de saisie : String
+  String car cela peut contenir aussi bien un texte qu'un nombre réel, qu'un nombre entier
+  
+    Dim tampon As String
+    
+ 
