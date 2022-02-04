@@ -1,0 +1,74 @@
+Select Case est similaire à l'instruction If, il est construit de façon similaire 
+  Mais il permet d'augmenter le nombre de critères
+    Plus exactement, il permet d'épurer le code 
+      Et surtout, Select Case permet une exécution pour rapide 
+
+L'objectif est de lister tous les critères 
+  Et pour chaque critère, engager une ou plusieurs actions
+
+On reprend l'exemple de code précédent, et notamment la sous partie sur le message affiché à l'utilisateur selon son IMC 
+
+***************************************************************** Ancien Code ***************************************************************************************************
+
+If (IMC <= 25) Then
+    MsgBox ("Votre IMC est normal")
+ElseIf (IMC >= 30) Then
+    MsgBox ("Vous êtes obèse")
+Else
+    MsgBox ("Vous êtes en surpoids")
+End If
+
+*********************************************************************************************************************************************************************************
+
+Select case prend comme argument la variable sur laquelle les tests vont être réalisés
+  En outre, comme toute instruction, elle est composée d'une borne de début et d'une borne de clôture
+
+L'objectif est de pouvoir lister tous les critères
+  Ici, le premier test est de savoir si la valeur de l'IMC est inférieur à 25
+    A noter que la condition étant une fourchette de valeur et non une simple comparaison, il faut ajouter la terme "Is"
+      En outre, il est possible d'enchainer les "Case" pour faire une fouchette par exemple ici entre 25 et 30 en rajoutant simplement "<= 30"
+        Car le code s'arrête dès qu'une condition est remplie
+    
+****************************************************************** Code 2.0 *****************************************************************************************************
+
+Slect Case (IMC)
+  Case Is <= 25
+    MsgBox ("Votre IMC est normal")
+  Case is <= 30
+    MsgBox ("Vous êtes en surpoids")
+  Case Else 
+    MsgBox ("Vous êtes obèse")
+End Select 
+
+*********************************************************************************************************************************************************************************
+   
+
+Enfin, en utilisant Select Case, on peut imaginier une application permettant de choisir la couleur des cellules 
+
+****************************************************************** Code choix couleur *******************************************************************************************
+
+Sub Couleur()
+
+Dim Couleur As String
+
+choix_couleur:
+Couleur = InputBox("De quelle couleur voulez-vous attribuer à cette cellule ?")
+Select Case (Couleur)
+  Case "Bleu"
+    Selection.Interior.Color = RGB(0, 0, 255)
+  Case "Vert"
+    Selection.Interior.Color = RGB(0, 255, 0)
+  Case "Rouge"
+    Selection.Interior.Color = RGB(255, 0, 0)
+  Case "Blanc"
+    Selection.Interior.Color = RGB(255, 255, 255)
+  Case "Noir"
+    Selection.Interior.Color = RGB(0, 0, 0)
+  Case Else
+    MsgBox ("Choisir : Blanc, Noir, Rouge, Bleu ou Vert. Pensez à la majuscule")
+    GoTo choix_couleur  
+End Select
+
+End Sub
+
+*********************************************************************************************************************************************************************************
