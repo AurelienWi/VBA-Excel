@@ -100,7 +100,7 @@ A noté qu'il est possible d'indiquer un Pas dans notre boucle "For"
     
 ******************************************************************* Code Final ********************************************************************************************
 
-  Sub boucle()
+Sub boucle()
 
 Dim ligne As Integer
 Dim colonne As Integer
