@@ -1,0 +1,103 @@
+Les boucles d'instruction permettent d'effectuer des traitements récurrents pour optimiser le code
+  Par exemple, si l'on souhaite appliquer un traitement sur l'ensemble des cellules d'un tableau
+    On ne va pas rentrer le code pour chaque cellue 
+      On va utiliser une boucle qui va passer en revu l'ensemble des cellules
+        Et dans cette boucle une uniquer ligne de code 
+        
+I - La boucle "For Each"
+
+Permet de passer en revu chaque cellule de la plage sélectionné
+
+Fonctionne sur deux notions :
+  1. Le groupe d'éléments 
+  2. L'élément qui parcours le groupe d'élément
+
+Avec une idée clés :
+  L'élément qui parcours le groupe d'élément doit être du même type que le groupe d'élément
+  
+Dans notre cas, le groupe d'élément que nous parcourons est l'objet "Selection"
+  C'est un objet "Range" càd de type plage de cellule
+    L'objet que nous allons utiliser pour parcourir la sélection doit être déclaré et du même type, "Range"
+    
+Pour déclarer, nous utilisons le mot clés "Dim"
+
+  _ Dim cellule As Range
+  
+Il faut ensuite écrire notre boucle tel que celle-ci aille chercher dans tout notre sélection
+  Et le mot clès VBA est justement "In Selection"
+    Il désigne la plage de cellule pré-sélectionnée
+  
+   _ For Each cellule In Selection
+  
+Comme tout instruction il faut la boucler 
+  Le mot clés est alors "Next"
+    Suivit de la variable que l'on utilise
+      
+      _ Next cellule
+      
+Les bornes de notre boucle sont donc :
+  
+   _ Dim cellule As Range
+        ...
+    Next cellule
+
+Avec entre les deux, l'instruction du traitement que nous souhaitons appliquer à ces cellules
+    
+II - Application 
+  
+    A) Afficher toutes les valeurs dans notre tableau
+
+La première chose qu'il faut insérer dans notre boucle, est donc le fait de mémoriser à chaque passage la valeur de la cellule dans une variable
+  Après avoir définit notre variable "memoire", il faut donc lui donner comme instruction d'ajouter la valeure de la cellule tout en gardant les valeures précédentes
+    Pour cela, il faut donc que cette dernière soit :
+      -Egale à elle-même
+      
+       _ memoire = memoire
+       
+      -Plus la valeure de la cellule, qui est contenue dans notre variable "cellule" 
+        Le mot clés est ".Value" qui désigne la valeure d'un objet de type range, càd ce que contient la cellule 
+          Enfin, pour que chaque valeur soit explicitement séparer, on concatenate le tout avec un tiret
+          
+      _ memoire = memoire & cellule.Value & "-"
+      
+ On ajoute une boite de dialogue pour afficher les résultats de notre boucle, et le code completet alors:
+ 
+****************************************************************** Code ********************************************************************************************************
+Sub frequence()
+
+Dim cellule As Range
+Dim memoire As String
+
+For Each cellule In Selection
+memoire = memoire & cellule.Value & "-"
+Next cellule
+
+MsgBox (memoire)
+
+End Sub
+*********************************************************************************************************************************************************************************
+
+    B) Calculer la fréquence d'apparition de chaque valeur
+ 
+Cette fois-ci, nous avons besoin d'une variable qui va permettre de pouvoir compter le nombre de fois où la valeur de chaque cellule est répétée
+  Que l'on va définir comme un entier court, toujours par soucis d'optimisation de Typage
+
+  _ Dim frequence As Byte
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
