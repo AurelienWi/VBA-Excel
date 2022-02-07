@@ -178,11 +178,9 @@ Pour cela, on utiliser la propriété .size auquel on va simplement ajouter la f
 ****************************************************************** Code finale **********************************************************************************************
 Sub frequence()
 
-Dim cellule As Range
-Dim ligne As Byte
-Dim colonne As Byte
+Dim cellule As Range : Dim cellule2 As Range
+Dim ligne As Byte : Dim colonne As Byte
 Dim frequence As Byte
-Dim cellule2 As Range
 
 For Each cellule In Selection
 frequence = 0
@@ -202,6 +200,7 @@ colonne = cellule.Column
             cellule.Interior.Color = RGB(255 - frequence * 40, 200, 200)
                     Else
             cellule.Font.Bold = False
+            cellule.Borders.Weight = xlThin
         End If
         
 Next cellule
