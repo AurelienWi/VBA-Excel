@@ -1,11 +1,11 @@
 
-Les boucles "For Each" permettent de réaliser des traitements récurrents, pour chaque élément d'un groupe déléments
+Les boucles "For Each" permettent de réaliser des traitements récurrents, pour chaque élément d'un groupe d'éléments
   Par exemple, pour chaque cellule d'un tableau 
   
 I - La boucle "For" 
 
 La boucle "For" quant à elle permet d'exécuter un traitement récurrent entre des bornes définies
-  Par exemple, entre les lignes 1 à 10 ou colonnes 2 à 8
+  Par exemple, entre les lignes 1 à 10 et / ou colonnes 2 à 8
     
   A) Détection des tableaux 
   
@@ -87,7 +87,7 @@ Maintenant que l'on délimité la plage de cellule sur laquelle nos différents 
                End With  
              End If   
           End If
- ***************************************************************************************************************************************************************************
+***************************************************************************************************************************************************************************
   
 Il nous manque désormais la délimatation pour la dernière ligne et la dernière colonne. 
   Que nous ne souhaitons donc pas mettre en gras ou en couleur, mais simplement déilimité 
