@@ -1,3 +1,4 @@
+
 Les boucles d'instruction permettent d'effectuer des traitements récurrents pour optimiser le code
   Par exemple, si l'on souhaite appliquer un traitement sur l'ensemble des cellules d'un tableau
     On ne va pas rentrer le code pour chaque cellue 
