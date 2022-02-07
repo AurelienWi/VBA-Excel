@@ -1,0 +1,171 @@
+
+Les boucles "For Each" permettent de réaliser des traitements récurrents, pour chaque élément d'un groupe déléments
+  Par exemple, pour chaque cellule d'un tableau 
+  
+I - La boucle "For" 
+
+La boucle "For" quant à elle permet d'exécuter un traitement récurrent entre des bornes définies
+  Par exemple, entre les lignes 1 à 10 ou colonnes 2 à 8
+    
+  A) Détection des tableaux 
+  
+L'objectic est de connaître les bornes de départ
+  Càd la ligne ainsi que la colonne de départ et d'arrivée
+    On va donc commencer par définir 4 variables 
+      A noter qu'un tableau peut se finir sur une ligne ou une colonne au nombre très élevé, on définit donc ces variable comme des Integer
+      
+        _ Dim ligne As Integer
+          Dim colonne As Integer
+          Dim der_ligne As Integer
+          Dim der_colonne As Integer
+          
+Il existe dans VBA une méthode qui permet de retourner les coordonnées de la dernière cellule de la feuille non-vide / ayant un contenu
+  Il s'agit de de l'objet "Cells" et plus particulièrement son sou-objet ".SpecialCells"
+  
+    _ der_ligne = Cells.SpecialCells(xlCellTypeLastCell).Row
+      der_colonne = Cells.SpecialCells(xlCellTypeLastCell).Column
+
+Grâce à cette manipulation, on obtient donc la dernière cellule jusqu'à laquelle nous souhaiterons appliquer notre détection de tableaux
+
+Nous partons alors de la cellule A1, jusu'à la dernière ligne
+  Et comme pour notre boulce "For Each", nous itérons le processus on fermant cette boucle par un "Next"
+
+  _ For ligne = 1 To der_ligne
+        .... 
+    Next ligne
+    
+Pour fonctionner, l'objet "Cells" à également besoin d'un numéro de colonne
+  Nous incrémentons donc une sous-boucle "For", identique à notre boucle pour la ligne 
+  
+       _ For colonne = 1 To der_colonne
+             ...
+         Next colonne
+        
+  
+A partir de cela, nous pouvons alorsr récupérer la prémière cellule non vide de notre feuille
+
+ _ For ligne = 1 To der_ligne
+       For colonne = 1 To der_colonne
+           If (Cells(ligne, colonne).Value <> "") Then
+               MsgBox (ligne & " - " & colonne)
+              Exit Sub
+           End If
+      Next colonne
+   Next ligne
+
+
+Maintenant que l'on délimité la plage de cellule sur laquelle nos différents tableaux sont présents
+  Il faut désormais les distinguer les uns des autres 
+    L'idée est qu'une colonne limitant le début (resp. la fin) d'un tableau aura une colonne vide sur sa droite (resp. sa gauche)
+    Et similairement pour une ligne 
+      On va donc utiliser "colonne + 1" et "ligne + 1" et effectuer des tests pour savoir si ce qui suit (précéde) est vide ou non
+      
+************************************************************ Délimiation et formating Headers tableau **********************************************************************
+      
+         If (ligne > 1) Then
+            If (Cells(ligne - 1, colonne).Value = "" And Cells(ligne + 1, colonne).Value <> "" And Cells(ligne, colonne).Value <> "") Then
+               With cells(ligne, colonne)
+                  .Borders(xlEdgeTop).LineStyle = xlContinuous
+                  .Borders(xlEdgeTop).Weight = xlThick
+                  .Font.Bold = True 
+                  .Interior.Color = RGB(60, 200, 60)
+               End With  
+             End If   
+          End If
+ 
+***************************************************************************************************************************************************************************
+  
+************************************************************* Délimiation et formating 1ere colonne ***********************************************************************
+      
+         If (ligne > 1) Then
+            If (Cells(ligne, colonne - 1).Value = "" And Cells(ligne, colonne + 1).Value <> "" And Cells(ligne, colonne).Value <> "") Then
+               With cells(ligne, colonne)
+                  .Borders(xlEdgeLeft).LineStyle = xlContinuous
+                  .Borders(xlEdgeLeft).Weight = xlThick
+                  .Font.Bold = True 
+                  .Interior.Color = RGB(60, 200, 60)
+               End With  
+             End If   
+          End If
+ ***************************************************************************************************************************************************************************
+  
+Il nous manque désormais la délimatation pour la dernière ligne et la dernière colonne. 
+  Que nous ne souhaitons donc pas mettre en gras ou en couleur, mais simplement déilimité 
+  
+A noté qu'il est possible d'indiquer un Pas dans notre boucle "For" 
+  Pas toujours présent, automatiquement fixé à 1
+    Et qui ne peut être négatif 
+    
+    _ For linge = 1 To 100 Step 2
+    
+******************************************************************* Code Final ********************************************************************************************
+
+  Sub boucle()
+
+Dim ligne As Integer
+Dim colonne As Integer
+Dim der_ligne As Integer
+Dim der_colonne As Integer
+
+der_ligne = Cells.SpecialCells(xlCellTypeLastCell).Row
+der_colonne = Cells.SpecialCells(xlCellTypeLastCell).Column
+
+For ligne = 1 To der_ligne
+    For colonne = 1 To der_colonne
+        
+        If (ligne > 1) Then
+            If (Cells(ligne - 1, colonne).Value = "" And Cells(ligne, colonne).Value <> "") Then
+                With Cells(ligne, colonne)
+                    .Borders(xlEdgeTop).LineStyle = xlContinuous
+                    .Borders(xlEdgeTop).Weight = xlThick
+                    .Font.Bold = True
+                    .Interior.Color = RGB(70, 170, 50)
+                End With
+             End If
+           End If
+                                
+        If (colonne > 1) Then
+            If (Cells(ligne, colonne - 1).Value = "" And Cells(ligne, colonne).Value <> "") Then
+               With Cells(ligne, colonne)
+                  .Borders(xlEdgeLeft).LineStyle = xlContinuous
+                  .Borders(xlEdgeLeft).Weight = xlThick
+                  .Font.Bold = True
+                  .Interior.Color = RGB(60, 200, 60)
+               End With
+             End If
+          End If
+        
+        If (ligne > 1) Then
+            If (Cells(ligne + 1, colonne).Value = "" And Cells(ligne, colonne).Value <> "") Then
+                With Cells(ligne, colonne)
+                    .Borders(xlEdgeBottom).LineStyle = xlContinuous
+                    .Borders(xlEdgeBottom).Weight = xlThick
+                End With
+             End If
+           End If
+        
+        If (colonne > 1) Then
+            If (Cells(ligne, colonne + 1).Value = "" And Cells(ligne, colonne).Value <> "") Then
+               With Cells(ligne, colonne)
+                  .Borders(xlEdgeRight).LineStyle = xlContinuous
+                  .Borders(xlEdgeRight).Weight = xlThick
+               End With
+             End If
+          End If
+        
+    Next colonne
+Next ligne
+
+End Sub
+
+***************************************************************************************************************************************************************************
+ 
+  
+   
+
+  
+  
+  
+  
+  
+ 
