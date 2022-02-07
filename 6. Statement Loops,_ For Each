@@ -84,20 +84,127 @@ Cette fois-ci, nous avons besoin d'une variable qui va permettre de pouvoir comp
 
   _ Dim frequence As Byte
   
+Il nous faut ensuite définir deux variables afin de savoir à quelle indice de ligne (1ere Variable) et de colonne (2eme Variable)
+  Le principe est que pour chaque cellule que nous parcourons dans la boucle de la comparer avec toutes les cellules du tableau
+    !! Il y aura donc une deuxième boucle à l'intérieur de cette première boucle !!
+    
+    _ Dim ligne As Byte
+      Dim colonne As Byte
   
+A chaque passage, il nous faudra donc réinitialiser la valeur de notre vraible "frequence"  
+  Car à chaque passage, nous allons l'incrémenter 
   
+La difficulté est qu'à chaque passage, il faut être capable de comparer avec toutes les cellules du tableau de la sélection
+  Il nous faut donc un deuxième objet qui permet de parcourir cette deuxième sélection
+    Deuxièrement sélection qui est également une "Range", notre objet doit donc a nouveau également être de type "Range"
+    
+      _ Dim cellule2 As Range
+      
+Avant d'insérer les instructions, notre code est alors : 
+
+  _ Dim frequence As Byte
+    Dim ligne As Byte
+    Dim colonne As Byte
+    Dim cellule2 As Range
+      
+    For Each cellule In Selection
+    frequence = 0
+    
+       For Each cellule2 In Selection
+            ....
+       Next cellule 2
+    
+    Next cellule
   
+Le principe des instructions de cette deuxième boucle, est de dire que si les valeurs sont identiques, il s'agit d'un doublon
+  Dans cette deuxième boucle nous parcourons a nouveau toutes les cellules du tableau
+    Donc, il faut d'abord  s'assurer que la cellule à laquelle nous la comparons n'est pas elle-même  
+      D'où la présence des variables "lignes" et "colonnes" 
+        Que nous devons affecter à l'indice de ligne et de colonne en cours 
+          Les mots clés Excel sont alors ".Row" et ".Column"
+          
+            _ ligne = cellule.Row
+              colonne = cellule.Column
   
+Il s'agit alors de s'assurer que les indices de lignes ou de colonnes sont différents  
+  Avec l'instruction If
   
+    _ if (ligne<>cellule2.Row or colonne <> cellule2.Column) Then
   
+Si cette condition est satisfaite, on peut ensuite vérifier si les valeurs sont les mêmes
+  Avec une sous-instruction IF
   
+      _ if(cellule.Value = cellule2.Value) Then
+          frequence = frequence + 1
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
+Notre deuxième boucle cest alors : 
+
+    _ For Each cellule2 In Selection
+          If (ligne <> cellule2.Row Or colonne <> cellule2.Column) Then
+              If (cellule.Value = cellule2.Value) Then
+                  frequence = frequence + 1
+               End If
+          End If
+      Next cellule2
+      
+A la fin de cette boucle, on a donc comparer toutes les cellules de tableaux à la cellule en cours de traitement dans la première boucle 
+  Autrement dit, on a comparé toutes les "cellule2" a notre unique "cellule"
+    Processus qui est ensuite itéré de par notre première boucle
+    
+      1. Mettre les cellules redontantes en "Bold"
+
+Ce que l'on peut faire dans un premier temps, est déjà faire ressortir en gras les valeurs étant des doublons (ou plus)
+  L'idée est que si le résultat de la deuxième boucle est 1, c'est qu'il y au moins deux fois la valeur de la cellule traitée dans le tableau
+    On peut alors incorporer une condition If après cette deuxième boucle mais toujours dans notr première boucle
+      
+      _ If (frequence > 1) Then
+          cellule.Font.Bold = True 
+          
+          
+       2. Augmenter la taille de la police des cellules proportionellement à leur "niveau de fréquence"
+
+Pour cela, on utiliser la propriété .size auquel on va simplement ajouter la fréquence (mutiplié par 2 pour grossir l'effet)
+     
+     _ If (frequence > 1) Then
+          cellule.Font.Size = 11 + frequence*2
+
+
+       2. Mettre une évolution de couleur 
+
+       _ If (frequence > 1) Then
+           cellule.interior.Color = RBG(255 - frequence * 3, 0 ,0)
+       
+
+****************************************************************** Code finale **************************************************************************************************
+Sub frequence()
+
+Dim cellule As Range
+Dim ligne As Byte
+Dim colonne As Byte
+Dim frequence As Byte
+Dim cellule2 As Range
+
+For Each cellule In Selection
+frequence = 0
+ligne = cellule.Row
+colonne = cellule.Column
+
+    For Each cellule2 In Selection
+        If (ligne <> cellule2.Row Or colonne <> cellule2.Column) Then
+            If (cellule.Value = cellule2.Value) Then
+                frequence = frequence + 1
+             End If
+        End If
+    Next cellule2
+    
+        If (frequence > 0) Then
+            cellule.Font.Bold = True
+            cellule.Interior.Color = RGB(255 - frequence * 40, 200, 200)
+                    Else
+            cellule.Font.Bold = False
+        End If
+        
+Next cellule
+
+End Sub
+*********************************************************************************************************************************************************************************
