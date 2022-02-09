@@ -1,0 +1,38 @@
+
+Créer des fonctions de calcul en VBA ensuite disponible de la même façon qu'un COUNT(), SUM(), etc. 
+  Mais que Excel ne propose pas de base
+  
+  
+Ici, nous allons tenter de calculer les montants TTC sur la base de montant HT et d'un taux de TVA
+
+Contrairement à une Macro définit par le mot clés "Sub"
+  Le mot clés pour débuter la rédaction d'une function est "Function"
+    On définit ensuite entre les parenthèses, les arguments nécessaire et leur type 
+      Argument qui sont ensuite demandés à l'utilisateur pour appliquer cette fonction
+    
+Dans le cas de cette fonction "TTC3
+  Il y a donc deux arguments necessaire
+    Le montant HT
+    La TVA 
+    
+A noter que la function doit également être "typé"
+
+    _ Function montant_TTC (montant_HT As Single, TVA As Single) As Double
+    
+Il suffit ensuite de définir le calcul opérer par la function    
+
+    _ montant_TTC = montant_HT * ( 1 + TVA)
+ 
+A noter que, pour quye la fonction soit proposé dans la "liste intuitive/déroulée" proposé par Excel
+  !! Il ne faut pas écrire notre code dans une feuille associé à notre sheet Excel
+      Mais bien sur un module à part entière !!
+      
+***************************************************************************************************************************************************************************
+
+Function montant_TTC(montant_HT As Single, TVA As Single) As Double
+
+montant_TTC = montant_HT * (1 + TVA)
+
+End Function
+
+***************************************************************************************************************************************************************************
