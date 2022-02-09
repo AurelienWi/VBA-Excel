@@ -1,0 +1,23 @@
+
+Pour qu'une fonction soit exploitable dans toutes les utilisations à venir 
+  Et pas seulement dans le feuillet actuel comme dans le cas du code précédent
+    Il faut alors la développer dans un modul du classeur du macro personnel : Personnal.xlsb
+    
+Démarche pour que les fonctions créees fonctionnent sur tous les classeurs (Créer Complément + ajouter complément)
+  Voir : https://www.youtube.com/watch?v=dE7jssf2CBw&list=PLpQBnWleLAavqfeZM5cd7Bh0MDa9saJly&index=10
+
+I - Cration d'une fonction calculant la durée depuis une date jusque ajd
+
+La fonction prendra naturellement comme argument une date
+  Par contre, ce qu'elle retourne est un réel
+  
+  _ fonction AGE (date_debut As Date) As Single
+  
+Il existe une fonction VBA : "Date"
+  Cette dernière permet de renter automatique la date du jour 
+    
+En outre, Excel calcul toujours une différence de date comme un nombre de jour
+  Il faut donc le diviser par 365 pour obtenir le nombre d'année
+  
+  
+ _ AGE = Round( Date - date_debut ) / 365.25 
