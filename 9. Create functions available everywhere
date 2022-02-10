@@ -1,0 +1,95 @@
+
+Pour qu'une fonction soit exploitable dans toutes les utilisations à venir 
+  Et pas seulement dans le feuillet actuel comme dans le cas du code précédent
+    Il faut alors la développer dans un modul du classeur du macro personnel : Personnal.xlsb
+    
+Démarche pour que les fonctions créees fonctionnent sur tous les classeurs (Créer Complément + ajouter complément)
+  Voir : https://www.youtube.com/watch?v=dE7jssf2CBw&list=PLpQBnWleLAavqfeZM5cd7Bh0MDa9saJly&index=10
+
+I - Cration d'une fonction calculant la durée depuis une date jusque ajd
+
+La fonction prendra naturellement comme argument une date
+  Par contre, ce qu'elle retourne est un réel
+  
+  _ fonction AGE (debut As Date) As Single
+  
+Il existe une fonction VBA : "Date"
+  Cette dernière permet de renter automatique la date du jour 
+    
+En outre, Excel calcul toujours une différence de date comme un nombre de jour
+  Il faut donc le diviser par 365 pour obtenir le nombre d'année
+  
+  
+ _ AGE = Round( Date - debut ) / 365.25 
+
+
+*******************************************************************************************************************************************************************************
+
+Function AGE(debut As Date) As Integer
+
+AGE = (Date - debut) / 365.25
+
+End Function
+
+*******************************************************************************************************************************************************************************
+
+
+II - Fonction calculant la fréquence d'apparition d'une valeur dans un tableau
+
+Cette fonction a donc besoin de deux arguments 
+  1 - Le tableau
+  2 - La valeur a tester
+    Et retour un nombre entier 
+    
+    _ Fonction doublon (table As Range, value As Single) As Integer
+    
+Cette fonction devra donc comparer la valeur donnée à toutes les valeures présentes dans le tableau désigné
+  - On a donc besoin d'une boucle qui va parcourir ce tableau cellule par cellule
+     En l'occurence, d'une boucle "For Each"
+      Plus particulièrement, il nous faut donc déclarér une varible utilisé dans cette boucle "For Each"
+        !!! Rappel :  l'élément qui parcours le groupe d'élément doit être du même type que le groupe d'élément !!!
+        
+  - Ensuite, il nous faut compter la fréquence d'apparition des valeurs
+      Il nous faut donc une deuxième variable
+      
+        _ Dim cellule As Range
+          Dim frequence As Integer 
+          
+          For Each cellule In table
+ 
+ Dans cette boucle nous avons besoin de faire un test afin de savoir si la valeur de la cellule en cours de lecture est identique à la valeur en paramètre
+  Donc nous utilisons les propriété "IF" et ".Value"
+    A noter qu'il est un bon réflex que "d'initier" une variable numérique avant de l'utiliser
+      Dans cette exemple, de spécifier clairement que notre fréquence commence à 0
+        Cela fonctionnerait ici quand meme, mais cela peut entraîner des complications dans d'autre cas 
+        
+        _ frequence = 0
+        
+          If cellule.Value = value Then
+            frequence = frequence + 1 
+          End If 
+      
+On finit en associant a notre fonction le résultat de "frequence"
+
+
+*****************************************************************************************************************************************************************************
+
+Function doublon(value As Single, table As Range) As Integer
+
+Dim cellule As Range
+Dim frequence As Integer
+
+frequence = 0
+
+For Each cellule In table
+    If cellule.value = value Then
+        frequence = frequence + 1
+    End If
+Next cellule
+
+doublon = frequence
+
+End Function
+
+*****************************************************************************************************************************************************************************
+
