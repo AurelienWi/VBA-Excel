@@ -1,0 +1,25 @@
+
+I - Supprimer les lignes vides d'un tableau
+
+Noius souhaitons donc traverser toutes les cellules d'un tableau jusqu'à la dernière
+  Nous aurons donc besoin des indices de ligne et de colonne pour la première et dernière cellule
+    
+    _ Dim row As Integer
+      Dim col As Integer
+      Dim last_row As Integer
+      Dim last_col As Integer
+      
+Il n'existe pas de propriété VBA permettant de se référer à la première cellule non vide
+  On commence donc à la cellule A1
+    Puis on utilise la propriété permettant de désigner la dernière cellule non vide 
+    
+    _ row = 1
+      col = 1
+      last_row = Cells.SpecialCells(xlCellTypeLastCell).row
+      last_col = Cells.SpecialCells(xlCellTypeLastCell).col
+
+ 
+ L'objectif est donc de parcourir toutes les cellules de la feuille de la première ligne à la dernière colonne
+  Il nous faut donc une double boucle (deux boucles imbriquées)
+    Une pour les indices de lignes
+    Une pour les indices colonnes
