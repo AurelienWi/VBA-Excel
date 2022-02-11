@@ -1,7 +1,7 @@
-Select Case est similaire à l'instruction If, il est construit de façon similaire 
+Select Case est similaire à l'instruction If
   Mais il permet d'augmenter le nombre de critères
     Plus exactement, il permet d'épurer le code 
-      Et surtout, Select Case permet une exécution pour rapide 
+      Et surtout, Select Case permet une exécution plus rapide 
 
 L'objectif est de lister tous les critères 
   Et pour chaque critère, engager une ou plusieurs actions
